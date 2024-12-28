@@ -1,0 +1,283 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AWR2544" --part "Default" --package "LOP" --context "r5fss0-0" --product "MCU_PLUS_SDK_AWR2544@10.00.00"
+ * @v2CliArgs --device "AWR2544" --package "FCCSP (ABL)" --context "r5fss0-0" --product "MCU_PLUS_SDK_AWR2544@10.00.00"
+ * @versions {"tool":"1.21.0+3721"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const flash      = scripting.addModule("/board/flash/flash", {}, false);
+const flash1     = flash.addInstance();
+const adcbuf     = scripting.addModule("/drivers/adcbuf/adcbuf", {}, false);
+const adcbuf1    = adcbuf.addInstance();
+const cbuff      = scripting.addModule("/drivers/cbuff/cbuff", {}, false);
+const cbuff1     = cbuff.addInstance();
+const crc        = scripting.addModule("/drivers/crc/crc", {}, false);
+const crc1       = crc.addInstance();
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
+const edma2      = edma.addInstance();
+const esm        = scripting.addModule("/drivers/esm/esm", {}, false);
+const esm1       = esm.addInstance();
+const hwa        = scripting.addModule("/drivers/hwa/hwa", {}, false);
+const hwa1       = hwa.addInstance();
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+const mpu_armv77 = mpu_armv7.addInstance();
+const mpu_armv78 = mpu_armv7.addInstance();
+const enet_cpsw  = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
+const enet_cpsw1 = enet_cpsw.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+flash1.$name                  = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name = "CONFIG_QSPI0";
+
+adcbuf1.$name = "CONFIG_ADCBUF0";
+
+cbuff1.$name = "CONFIG_CBUFF0";
+
+crc1.$name = "CONFIG_CRC0";
+
+edma2.$name                             = "CONFIG_EDMA1";
+edma2.instance                          = "EDMA_RSS_A";
+cbuff1.edmaConfig                       = edma2;
+edma2.edmaRmDmaCh[0].resourceType       = scripting.forceWrite("ownDmaCh");
+edma2.edmaRmDmaCh[0].$name              = "CONFIG_EDMA_RM1";
+edma2.edmaRmDmaCh[0].startIndex         = 0;
+edma2.edmaRmDmaCh[0].endIndex           = 63;
+edma2.edmaRmQdmaCh[0].$name             = "CONFIG_EDMA_RM4";
+edma2.edmaRmQdmaCh[0].startIndex        = 0;
+edma2.edmaRmQdmaCh[0].endIndex          = 0;
+edma2.edmaRmTcc[0].$name                = "CONFIG_EDMA_RM5";
+edma2.edmaRmTcc[0].startIndex           = 0;
+edma2.edmaRmTcc[0].endIndex             = 63;
+edma2.edmaRmParam[0].$name              = "CONFIG_EDMA_RM6";
+edma2.edmaRmParam[0].startIndex         = 0;
+edma2.edmaRmParam[0].endIndex           = 127;
+edma2.edmaRmReservedDmaCh[0].$name      = "CONFIG_EDMA_RM7";
+edma2.edmaRmReservedDmaCh[0].startIndex = 0;
+edma2.edmaRmReservedDmaCh[0].endIndex   = 0;
+
+esm1.$name                             = "CONFIG_ESM0";
+esm1.esmNotifier.create(2);
+esm1.esmNotifier[0].$name              = "CONFIG_ESM_NOTIFY0";
+esm1.esmNotifier[0].groupNumber        = 2;
+esm1.esmNotifier[0].errorNumber        = 25;
+esm1.esmNotifier[0].notify             = "MmwDemo_mssVMONCb";
+esm1.esmNotifier[1].$name              = "CONFIG_ESM_NOTIFY1";
+esm1.esmNotifier[1].errorNumber        = 123;
+esm1.esmNotifier[1].setIntrPriorityLvl = "LOW";
+esm1.esmNotifier[1].notify             = "MmwDemo_anaWuClkStsErrCallBack";
+
+hwa1.$name                                       = "CONFIG_HWA0";
+hwa1.configParamset.create(5);
+hwa1.configParamset[0].$name                     = "HWA_PARAMSET_CONFIG0";
+hwa1.configParamset[0].triggerMode               = "HWA_TRIG_MODE_DMA";
+hwa1.configParamset[1].$name                     = "HWA_PARAMSET_CONFIG1";
+hwa1.configParamset[1].triggerMode               = "HWA_TRIG_MODE_DMA";
+hwa1.configParamset[1].triggerSrc                = 1;
+hwa1.configParamset[1].accelMode                 = "HWA_ACCELMODE_FFT";
+hwa1.configParamset[1].dcEstResetMode            = "HWA_DCEST_INTERFSUM_RESET_MODE_PARAMRESET";
+hwa1.configParamset[1].srcBcnt                   = 3;
+hwa1.configParamset[1].srcSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[1].srcScale                  = 8;
+hwa1.configParamset[1].dstSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[1].srcAcnt                   = 383;
+hwa1.configParamset[1].dstAcnt                   = 383;
+hwa1.configParamset[1].srcAIdx                   = 8;
+hwa1.configParamset[1].srcBIdx                   = 2;
+hwa1.configParamset[1].srcRealComplex            = "HWA_SAMPLES_FORMAT_REAL";
+hwa1.configParamset[1].dstAIdx                   = 8;
+hwa1.configParamset[1].dstBIdx                   = 2;
+hwa1.configParamset[1].dstRealComplex            = "HWA_SAMPLES_FORMAT_REAL";
+hwa1.configParamset[2].$name                     = "HWA_PARAMSET_CONFIG2";
+hwa1.configParamset[2].accelMode                 = "HWA_ACCELMODE_FFT";
+hwa1.configParamset[2].dcSubEnable               = true;
+hwa1.configParamset[2].dcSubSelect               = "HWA_DCSUB_SELECT_DCEST";
+hwa1.configParamset[2].interfEstResetMode        = "HWA_DCEST_INTERFSUM_RESET_MODE_PARAMRESET";
+hwa1.configParamset[2].srcBcnt                   = 3;
+hwa1.configParamset[2].srcSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[2].srcScale                  = 8;
+hwa1.configParamset[2].srcAcnt                   = 383;
+hwa1.configParamset[2].dstAcnt                   = 383;
+hwa1.configParamset[2].srcAIdx                   = 8;
+hwa1.configParamset[2].srcBIdx                   = 2;
+hwa1.configParamset[2].srcRealComplex            = "HWA_SAMPLES_FORMAT_REAL";
+hwa1.configParamset[2].dstAIdx                   = 8;
+hwa1.configParamset[2].dstBIdx                   = 2;
+hwa1.configParamset[2].dstRealComplex            = "HWA_SAMPLES_FORMAT_REAL";
+hwa1.configParamset[2].dstSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[3].$name                     = "HWA_PARAMSET_CONFIG3";
+hwa1.configParamset[3].accelMode                 = "HWA_ACCELMODE_FFT";
+hwa1.configParamset[3].interfLocalizeEnable      = true;
+hwa1.configParamset[3].interfThresholdMode       = "HWA_INTERFTHRESH_MODE_MAGDIFF";
+hwa1.configParamset[3].interfThresholdSelect     = "HWA_INTERFTHRESH_SELECT_EST_INDIVIDUAL";
+hwa1.configParamset[3].interfMitigEnable         = true;
+hwa1.configParamset[3].interfMitigCountThreshold = 1;
+hwa1.configParamset[3].interfMitigPathSelect     = "HWA_INTERFMITIGATION_PATH_WINDOWZEROOUT";
+hwa1.configParamset[3].fftEn                     = true;
+hwa1.configParamset[3].fftSize                   = 7;
+hwa1.configParamset[3].fftSize3xEn               = true;
+hwa1.configParamset[3].butterflyScaling          = 7;
+hwa1.configParamset[3].windowSymm                = true;
+hwa1.configParamset[3].srcAddr                   = 32768;
+hwa1.configParamset[3].destAddr                  = 0;
+hwa1.configParamset[3].srcAcnt                   = 383;
+hwa1.configParamset[3].srcSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[3].srcScale                  = 8;
+hwa1.configParamset[3].dstSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[3].srcAIdx                   = 8;
+hwa1.configParamset[3].srcBcnt                   = 3;
+hwa1.configParamset[3].srcBIdx                   = 2;
+hwa1.configParamset[3].srcRealComplex            = "HWA_SAMPLES_FORMAT_REAL";
+hwa1.configParamset[3].dstAcnt                   = 191;
+hwa1.configParamset[3].dstAIdx                   = 16;
+hwa1.configParamset[3].dstBIdx                   = 4;
+hwa1.configParamset[3].windowMode                = "HWA_WINDOW_MODE_16BITREAL";
+hwa1.configParamset[3].windowEn                  = true;
+hwa1.configParamset[3].interfMitigLeftHystOrder  = 2;
+hwa1.configParamset[3].interfMitigRightHystOrder = 2;
+hwa1.configParamset[4].$name                     = "HWA_PARAMSET_CONFIG4";
+hwa1.configParamset[4].accelMode                 = "HWA_ACCELMODE_COMPRESS";
+hwa1.configParamset[4].cmpScaleFactorBW          = 4;
+hwa1.configParamset[4].srcSign                   = "HWA_SAMPLES_SIGNED";
+hwa1.configParamset[4].srcScale                  = 8;
+hwa1.configParamset[4].srcAcnt                   = 7;
+hwa1.configParamset[4].srcAIdx                   = 4;
+hwa1.configParamset[4].srcBcnt                   = 23;
+hwa1.configParamset[4].srcBIdx                   = 96;
+hwa1.configParamset[4].dstAcnt                   = 3;
+hwa1.configParamset[4].dstAIdx                   = 4;
+hwa1.configParamset[4].dstBIdx                   = 48;
+hwa1.configParamset[4].cmpDitherEnable           = true;
+hwa1.configCommon[0].$name                       = "HWA_COMMON_CONFIG0";
+hwa1.configCommon[0].numLoops                    = 384;
+hwa1.configCommon[0].paramStopIdx                = 9;
+hwa1.configCommon[0].lfsrSeed                    = 0xB;
+hwa1.configCommon[0].EGEKparam_HWA_CMP_K_ARR_LEN = "3 4 5 7 9 11 13 15";
+hwa1.configCommon[0].configMask                  = ["HWA_COMMONCONFIG_MASK_CMP_LFSRSEED0","HWA_COMMONCONFIG_MASK_DCEST_SCALESHIFT","HWA_COMMONCONFIG_MASK_EGECOMRESS_KPARAM","HWA_COMMONCONFIG_MASK_INTERFSUM_MAG","HWA_COMMONCONFIG_MASK_INTERFSUM_MAGDIFF","HWA_COMMONCONFIG_MASK_INTERF_MITG_WINDOW_PARAM","HWA_COMMONCONFIG_MASK_LFSRSEED","HWA_COMMONCONFIG_MASK_STATEMACHINE_CFG","HWA_COMMONCONFIG_MASK_TWIDDITHERENABLE","HWA_COMMONCONFIG_MASK_TWIDINCR_DELTA_FRAC"];
+hwa1.configCommon[0].cmpLfsrSeed0                = 0xB;
+
+ipc.intrPriority = 12;
+
+debug_log.enableUartLog           = true;
+debug_log.enableCssLog            = false;
+debug_log.uartLog.$name           = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign    = "UARTA";
+debug_log.uartLog.UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.UART.TX.$assign = "PAD_DB";
+
+edma1.$name                        = "CONFIG_EDMA0";
+edma1.enableOwnQdmaChannelConfig   = false;
+edma1.enableReservedChannelConfig  = false;
+edma1.regionId                     = 0;
+edma1.instance                     = "EDMA_DSS_A";
+flash1.peripheralDriver.edmaConfig = edma1;
+debug_log.uartLog.edmaConfig       = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmTcc[0].endIndex        = 63;
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 16;
+
+mpu_armv73.$name    = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr = 0x80000;
+mpu_armv73.size     = 16;
+
+mpu_armv74.$name    = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr = 0x10200000;
+mpu_armv74.size     = 20;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x102E0000;
+mpu_armv75.size         = 16;
+mpu_armv75.allowExecute = false;
+
+mpu_armv76.$name        = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr     = 0xC5000000;
+mpu_armv76.attributes   = "NonCached";
+mpu_armv76.allowExecute = false;
+mpu_armv76.size         = 12;
+
+mpu_armv77.$name        = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr     = 0x1021C000;
+mpu_armv77.attributes   = "NonCached";
+mpu_armv77.allowExecute = false;
+mpu_armv77.size         = 14;
+
+mpu_armv78.$name        = "CONFIG_MPU_REGION7";
+mpu_armv78.baseAddr     = 0x88000000;
+mpu_armv78.attributes   = "NonCached";
+mpu_armv78.allowExecute = false;
+mpu_armv78.size         = 20;
+
+enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
+enet_cpsw1.hostportRxCsumOffloadEn         = false;
+enet_cpsw1.cptsHostRxTsEn                  = false;
+enet_cpsw1.macAddrList                     = "70:ff:76:1d:ed:f2,70:ff:76:1d:ec:e3";
+enet_cpsw1.LargePoolPktCount               = 17;
+enet_cpsw1.txDmaChannel.create(2);
+enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
+enet_cpsw1.txDmaChannel[0].PacketsCount    = 1;
+enet_cpsw1.txDmaChannel[0].enableCircBuff  = true;
+enet_cpsw1.txDmaChannel[1].$name           = "ENET_DMA_TX_CH_PTP";
+enet_cpsw1.txDmaChannel[1].PacketsCount    = 4;
+enet_cpsw1.rxDmaChannel.create(2);
+enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
+enet_cpsw1.rxDmaChannel[0].PacketsCount    = 8;
+enet_cpsw1.rxDmaChannel[1].$name           = "ENET_DMA_RX_CH_PTP";
+enet_cpsw1.rxDmaChannel[1].macAddrCount    = 0;
+enet_cpsw1.rxDmaChannel[1].PacketsCount    = 4;
+enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
+enet_cpsw1.pinmux[0].phyToMacInterfaceMode = "RGMII";
+enet_cpsw1.pinmux[0].CPTS.GENF0.$assign    = "PAD_BM";
+enet_cpsw1.pinmux[0].CPTS.GENF0.$used      = true;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.QSPI["0"].$suggestSolution = "PAD_AL";
+flash1.peripheralDriver.QSPI["1"].$suggestSolution = "PAD_AM";
+flash1.peripheralDriver.QSPI["2"].$suggestSolution = "PAD_AN";
+flash1.peripheralDriver.QSPI["3"].$suggestSolution = "PAD_AO";
+flash1.peripheralDriver.QSPI.$suggestSolution      = "QSPI0";
+flash1.peripheralDriver.QSPI.CLK.$suggestSolution  = "PAD_AP";
+flash1.peripheralDriver.QSPI.CS.$suggestSolution   = "PAD_AQ";
+enet_cpsw1.pinmux[0].CPTS.$suggestSolution         = "CPTS0";
+enet_cpsw1.pinmux[0].MDIO.$suggestSolution         = "MDIO0";
+enet_cpsw1.pinmux[0].MDIO.DATA.$suggestSolution    = "PAD_CM";
+enet_cpsw1.pinmux[0].MDIO.CLK.$suggestSolution     = "PAD_CN";
+enet_cpsw1.pinmux[0].RGMII.$suggestSolution        = "RGMII0";
+enet_cpsw1.pinmux[0].RGMII.RD0.$suggestSolution    = "PAD_CL";
+enet_cpsw1.pinmux[0].RGMII.RD1.$suggestSolution    = "PAD_CK";
+enet_cpsw1.pinmux[0].RGMII.RD2.$suggestSolution    = "PAD_CJ";
+enet_cpsw1.pinmux[0].RGMII.RD3.$suggestSolution    = "PAD_CI";
+enet_cpsw1.pinmux[0].RGMII.RCTL.$suggestSolution   = "PAD_CB";
+enet_cpsw1.pinmux[0].RGMII.RCLK.$suggestSolution   = "PAD_CH";
+enet_cpsw1.pinmux[0].RGMII.TD0.$suggestSolution    = "PAD_CF";
+enet_cpsw1.pinmux[0].RGMII.TD1.$suggestSolution    = "PAD_CE";
+enet_cpsw1.pinmux[0].RGMII.TD2.$suggestSolution    = "PAD_CD";
+enet_cpsw1.pinmux[0].RGMII.TD3.$suggestSolution    = "PAD_CC";
+enet_cpsw1.pinmux[0].RGMII.TCTL.$suggestSolution   = "PAD_CA";
+enet_cpsw1.pinmux[0].RGMII.TCLK.$suggestSolution   = "PAD_CG";

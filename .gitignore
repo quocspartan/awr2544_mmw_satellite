@@ -44,9 +44,17 @@
 
 # Kernel Module Compile Results
 *.mod*
-*.cmd
+#*.cmd
 .tmp_versions/
 modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/.metadata/
+
+.jxbrowser.userdata
+RemoteSystemsTempFiles
+Release
+Debug
+.settings
+dvt
