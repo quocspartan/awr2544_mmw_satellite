@@ -11,6 +11,8 @@
 ## Hardware
 AWR2544LOPEVM(https://www.ti.com/tool/AWR2544LOPEVM)
 
+![alt text][image1]
+
 ## Features
 - 76GHz to 81GHz mmWave sensor
 - 4TX/4RX 3D waveguide antenna
